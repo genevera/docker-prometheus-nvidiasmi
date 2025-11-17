@@ -124,13 +124,14 @@ type gpuInfo struct {
 		GPUTempMaxMemThreshold string `xml:"gpu_temp_max_mem_threshold"`
 	} `xml:"temperature"`
 	PowerReadings struct {
-		PowerState         string `xml:"power_state"`
-		PowerDraw          string `xml:"power_draw"`
-		PowerLimit         string `xml:"power_limit"`
-		DefaultPowerLimit  string `xml:"default_power_limit"`
-		EnforcedPowerLimit string `xml:"enforced_power_limit"`
-		MinPowerLimit      string `xml:"min_power_limit"`
-		MaxPowerLimit      string `xml:"max_power_limit"`
+		PowerState          string `xml:"power_state"`
+		AveragePowerDraw    string `xml:"average_power_draw"`
+		InstantPowerDraw    string `xml:"instant_power_draw"`
+		CurrentPowerLimit   string `xml:"current_power_limit"`
+		DefaultPowerLimit   string `xml:"default_power_limit"`
+		RequestedPowerLimit string `xml:"requested_power_limit"`
+		MinPowerLimit       string `xml:"min_power_limit"`
+		MaxPowerLimit       string `xml:"max_power_limit"`
 	} `xml:"gpu_power_readings"`
 	Clocks struct {
 		GraphicsClock string `xml:"graphics_clock"`
@@ -311,10 +312,11 @@ func metrics(w http.ResponseWriter, r *http.Request) {
 		writeMetric(w, "nvidiasmi_memory_temp_celsius", meta, filterUnit(GPU.Temperature.MemoryTemp))
 		writeMetric(w, "nvidiasmi_gpu_temp_max_mem_threshold_celsius", meta, filterUnit(GPU.Temperature.GPUTempMaxMemThreshold))
 		writeMetric(w, "nvidiasmi_power_state_int", meta, filterNumber(GPU.PowerReadings.PowerState))
-		writeMetric(w, "nvidiasmi_power_draw_watts", meta, filterUnit(GPU.PowerReadings.PowerDraw))
-		writeMetric(w, "nvidiasmi_power_limit_watts", meta, filterUnit(GPU.PowerReadings.PowerLimit))
+		writeMetric(w, "nvidiasmi_power_instant_draw_watts", meta, filterUnit(GPU.PowerReadings.InstantPowerDraw))
+		writeMetric(w, "nvidiasmi_power_average_draw_watts", meta, filterUnit(GPU.PowerReadings.AveragePowerDraw))
+		writeMetric(w, "nvidiasmi_current_power_limit_watts", meta, filterUnit(GPU.PowerReadings.CurrentPowerLimit))
 		writeMetric(w, "nvidiasmi_default_power_limit_watts", meta, filterUnit(GPU.PowerReadings.DefaultPowerLimit))
-		writeMetric(w, "nvidiasmi_enforced_power_limit_watts", meta, filterUnit(GPU.PowerReadings.EnforcedPowerLimit))
+		writeMetric(w, "nvidiasmi_requested_power_limit_watts", meta, filterUnit(GPU.PowerReadings.RequestedPowerLimit))
 		writeMetric(w, "nvidiasmi_min_power_limit_watts", meta, filterUnit(GPU.PowerReadings.MinPowerLimit))
 		writeMetric(w, "nvidiasmi_max_power_limit_watts", meta, filterUnit(GPU.PowerReadings.MaxPowerLimit))
 		writeMetric(w, "nvidiasmi_clock_graphics_hertz", meta, filterUnit(GPU.Clocks.GraphicsClock))

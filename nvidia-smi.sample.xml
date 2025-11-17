@@ -180,10 +180,11 @@
 		<gpu_power_readings>
 			<power_state>P0</power_state>
 			<power_management>Supported</power_management>
-			<power_draw>45.45 W</power_draw>
-			<power_limit>196.00 W</power_limit>
+			<instant_power_draw>120.00 W</instant_power_draw>
+			<average_power_draw>45.45 W</average_power_draw>
+			<current_power_limit>196.00 W</current_power_limit>
 			<default_power_limit>196.00 W</default_power_limit>
-			<enforced_power_limit>196.00 W</enforced_power_limit>
+			<requested_power_limit>196.00 W</requested_power_limit>
 			<min_power_limit>120.00 W</min_power_limit>
 			<max_power_limit>241.00 W</max_power_limit>
 		</power_readings>
