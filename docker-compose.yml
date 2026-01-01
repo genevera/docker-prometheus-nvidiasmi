@@ -1,15 +1,14 @@
-version: "3"
 services:
   prometheus-nvidiasmi:
+    image: quay.io/genevera/prometheus-nvidiasmi:latest
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     # environment:
     #   - TEST_MODE=1
     ports:
       - 9202:9202/tcp
-    privileged: true
-    runtime: nvidia
+    gpus: all
     tty: true
     volumes:
       - ./src/app.go:/go/app.go

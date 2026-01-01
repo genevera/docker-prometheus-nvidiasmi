@@ -1,13 +1,14 @@
-FROM nvidia/cuda:11.4.3-base-ubuntu20.04
+FROM nvidia/cuda:13.1.0-base-ubi10 
 
 LABEL maintainer='Michaël "e7d" Ferrand <michael@e7d.io>'
+ENV GOPATH=/go
+ENV PATH=$PATH:$GOPATH/bin
 
-RUN apt-get update && \
-    apt-get -y install git golang --no-install-recommends && \
-    rm -r /var/lib/apt/lists/*
-RUN export GOPATH=/go && \
-    export PATH=$PATH:$GOPATH/bin && \
-    go get -u github.com/mitranim/gow && \
+RUN dnf makecache && \
+    dnf -y install git golang && \
+    dnf clean all
+
+RUN go install github.com/mitranim/gow@latest && \
     mv $GOPATH/bin/gow /usr/bin/gow
 
 WORKDIR /go

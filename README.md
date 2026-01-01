@@ -6,16 +6,14 @@ Supports multiple GPUs.
 # How-To
 
 Run with a Docker command:
-`docker run --privileged --runtime nvidia -p 9202:9202/tcp e7db/prometheus-nvidiasmi`
+`docker run --gpus=all -p 9202:9202/tcp quay.io/genevera/prometheus-nvidiasmi`
 
 Run through a docker-compose file:
 ```
-version: "3"
 services:
   prometheus-nvidiasmi:
-    image: e7db/prometheus-nvidiasmi
-    privileged: true
-    runtime: nvidia
+    image: quay.io/genevera/prometheus-nvidiasmi
+    gpus: all
     ports:
       - "9202:9202/tcp"
 ```
